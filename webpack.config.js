@@ -1,18 +1,14 @@
-var path = require('path');
-var webpack = require('webpack');
+const path = require('path');
+const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-    context: path.resolve(__dirname, 'src'),
-
-    devtool: 'inline-source-map',
-    
-    entry: [
-        'react-hot-loader/patch',
-        `webpack-dev-server/client?http://localhost:3001`,
-        'webpack/hot/only-dev-server',
-        './src/index.js',
-
-    ],
+    entry: {
+        main: [
+            'react-hot-loader/patch',
+            path.resolve(__dirname, 'src')
+        ]
+    },
 
     output: {
         filename: '[name]-[hash:8].js',
@@ -31,6 +27,12 @@ module.exports = {
         new webpack.HotModuleReplacementPlugin(),
         new webpack.NamedModulesPlugin(),
         new webpack.NoEmitOnErrorsPlugin(),
+        new HtmlWebpackPlugin({
+            title: 'React',
+        }),
+        new webpack.WatchIgnorePlugin([
+            path.join(__dirname, 'node_modules')
+        ]),
     ],
 
     module: {
@@ -38,34 +40,26 @@ module.exports = {
             test: /\.js$/,
             use: [{
                 loader: 'babel-loader',
+                options: {
+                    cacheDirectory: true,
+                }
             }]
         }, {
             test: /\.css$/,
-            use: ['style-loader', 'css-loader']
+            use: [
+                'style-loader',
+                'css-loader'
+            ]
         }]
     },
-
-    stats: {
-        assets: true,
-        children: false,
-        chunks: false,
-        hash: false,
-        modules: false,
-        publicPath: false,
-        timings: true,
-        version: false,
-        warnings: true,
-        colors: {
-            green: '\u001b[32m',
-        },
-    },
-
     devServer: {
-        hot: true,
-        contentBase: path.resolve(__dirname, 'src'),
-        publicPath: '/',
         host: 'localhost',
-        port: 3001,
-        historyApiFallback: true
+        port: 3000,
+        hot: true,
+        historyApiFallback: true,
+        watchOptions: {
+            aggregateTimeout: 300,
+            poll: 1000,
+        }
     }
-}
+};
