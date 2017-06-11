@@ -26,11 +26,14 @@
   "dependencies": {
     "babel-polyfill": "^6.23.0",
     "flux": "^3.1.2",
+    "flux-utils": "^1.0.2-stop",
     "immutable": "^3.8.1",
-    "purecss": "^1.0.0",
+    "material-ui": "^0.18.3",
     "react": "^15.5.4",
     "react-css-modules": "^4.3.0",
     "react-dom": "^15.5.4",
-    "react-hot-loader": "^3.0.0-beta.7"
+    "react-hot-loader": "^3.0.0-beta.7",
+    "react-materialize": "^1.0.1",
+    "react-tap-event-plugin": "^2.0.1"
   }
 }
